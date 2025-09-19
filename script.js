@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePerformanceMonitoring();
     handleContactForm();
     animateStats();
+    initializeEducationCards();
 });
 
 // Navigation Functions
@@ -616,6 +617,66 @@ function createRippleEffect(event, element) {
     }, 600);
 }
 
+// CGPA Progress Bar Animation
+function animateCGPABars() {
+    const cgpaBars = document.querySelectorAll('.cgpa-mini-progress');
+    
+    cgpaBars.forEach(bar => {
+        const cgpaValue = parseFloat(bar.getAttribute('data-cgpa'));
+        const maxValue = parseFloat(bar.getAttribute('data-max'));
+        const percentage = (cgpaValue / maxValue) * 100;
+        
+        // Set the width with animation
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = percentage + '%';
+        }, 500);
+    });
+}
+
+// Education Cards Interaction Handler
+function initializeEducationCards() {
+    const educationCards = document.querySelectorAll('.education-card');
+    console.log('✨ Shimmer effect initialized for ' + educationCards.length + ' education cards');
+    console.log('🌟 Floating stars animation activated');
+    console.log('🪐 Orbiting planets animation activated');
+    console.log('⭐ Corner stars (4 per box) gently floating');
+    
+    educationCards.forEach(card => {
+        // Click handler - maintains dark theme
+        card.addEventListener('click', function(e) {
+            // Add clicked class for animation
+            this.classList.add('clicked');
+            
+            // Remove after animation
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 300);
+            
+            // Optional: Add some interaction feedback
+            console.log('Education card clicked:', this.querySelector('.education-title')?.textContent);
+        });
+        
+        // Ensure dark theme is preserved
+        card.addEventListener('mouseenter', function() {
+            // Force dark background if any conflicting styles exist
+            this.style.setProperty('background', 'rgba(15, 23, 42, 0.95)', 'important');
+            console.log('🌌 Education card hovered: ' + (this.classList.contains('university-card') ? 'University' : 'High School'));
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            // Reset to default dark background
+            this.style.setProperty('background', 'rgba(15, 23, 42, 0.92)', 'important');
+        });
+    });
+    
+    // Animate CGPA bars after a delay
+    setTimeout(animateCGPABars, 1000);
+    
+    // Log shimmer effect status
+    console.log(`✨ Shimmer effect initialized for ${educationCards.length} education cards`);
+}
+
 // All features now initialized in main DOMContentLoaded above
 
 // Export functions for testing (optional)
@@ -625,6 +686,7 @@ if (typeof module !== 'undefined' && module.exports) {
         renderGallery,
         openModal,
         closeModal,
-        showNotification
+        showNotification,
+        animateCGPABars
     };
 }
