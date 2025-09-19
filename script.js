@@ -114,6 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeModal();
     initializeScrollAnimations();
     initializeTypingEffect();
+    initializeLazyLoading();
+    initializeThemeToggle();
+    initializePerformanceMonitoring();
+    handleContactForm();
+    animateStats();
 });
 
 // Navigation Functions
@@ -135,8 +140,14 @@ function initializeNavigation() {
     
     // Close mobile menu when clicking on nav links
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
             navMenu.classList.remove('active');
+            
+            // Add click animation
+            addClickAnimation(link);
+            
+            // Add ripple effect
+            createRippleEffect(e, link);
         });
     });
     
@@ -181,25 +192,36 @@ function initializeNavigation() {
     
 
     
-    // Smooth scrolling for navigation links with immediate click feedback
+    // Smooth scrolling for internal navigation links with proper page navigation
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
+            const href = link.getAttribute('href');
             
-            // Immediate visual feedback on click
-            navLinks.forEach(navLink => navLink.classList.remove('active'));
-            link.classList.add('active');
-            
-            // Scroll to target section
-            const targetId = link.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+            // Check if it's an internal anchor link (starts with #)
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                
+                // Immediate visual feedback on click
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Scroll to target section
+                const targetSection = document.querySelector(href);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 70;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            } else if (href.includes('#')) {
+                // Handle links to other pages with anchors (like index.html#contact)
+                // Let the browser handle the navigation naturally
+                // Don't prevent default for external page navigation
+            } else {
+                // Regular page navigation - let it proceed normally
+                // Don't prevent default for page changes
             }
         });
     });
@@ -456,7 +478,7 @@ function animateStats() {
 }
 
 // Initialize stats animation
-document.addEventListener('DOMContentLoaded', animateStats);
+// Stats animation moved to main DOMContentLoaded
 
 // Contact Form Handler (if you add a contact form later)
 function handleContactForm() {
@@ -563,13 +585,38 @@ function initializePerformanceMonitoring() {
 
 
 
-// Initialize all features
-document.addEventListener('DOMContentLoaded', () => {
-    initializeLazyLoading();
-    initializeThemeToggle();
-    initializePerformanceMonitoring();
-    handleContactForm();
-});
+// Navigation Click Animation Functions
+function addClickAnimation(element) {
+    // Add clicked class for animation
+    element.classList.add('clicked');
+    
+    // Remove the class after animation
+    setTimeout(() => {
+        element.classList.remove('clicked');
+    }, 300);
+}
+
+function createRippleEffect(event, element) {
+    const ripple = document.createElement('span');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.classList.add('ripple');
+    
+    element.appendChild(ripple);
+    
+    // Remove ripple after animation
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// All features now initialized in main DOMContentLoaded above
 
 // Export functions for testing (optional)
 if (typeof module !== 'undefined' && module.exports) {
