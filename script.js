@@ -124,15 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Navigation Functions
 function initializeNavigation() {
-    // Logo click to scroll to top
+    // Logo click handler - different behavior for different pages
     const navLogo = document.querySelector('.nav-logo a');
     if (navLogo) {
         navLogo.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            const href = navLogo.getAttribute('href');
+            
+            // If on index page and clicking #home, scroll smoothly
+            if (href === '#home') {
+                e.preventDefault();
+                const homeSection = document.querySelector('#home');
+                if (homeSection) {
+                    homeSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    // Fallback: scroll to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            // For other pages (href = "index.html#home"), let default behavior proceed
+            // This will navigate to index.html and scroll to #home automatically
         });
     }
     
@@ -428,17 +444,6 @@ function initializeTypingEffect() {
         setTimeout(typeWriter, 1000);
     }
 }
-
-// Parallax Effect for Hero Section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const parallaxSpeed = 0.5;
-    
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-    }
-});
 
 // Smooth Reveal Animation for Stats
 function animateStats() {
