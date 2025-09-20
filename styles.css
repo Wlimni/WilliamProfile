@@ -1962,41 +1962,137 @@ section {
     }
 }
 
-/* Landscape orientation optimization */
-@media (max-width: 768px) and (orientation: landscape) {
+/* Landscape orientation - Full screen optimization */
+@media (max-width: 968px) and (orientation: landscape) and (max-height: 500px) {
+    /* Full screen landscape mode */
+    html, body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
+    /* Compact navbar for landscape */
+    .navbar {
+        height: clamp(50px, 8vh, 70px);
+    }
+    
+    .nav-container {
+        height: clamp(50px, 8vh, 70px);
+        padding: 0 clamp(10px, 2vw, 20px);
+    }
+    
+    .nav-logo a {
+        font-size: clamp(1.2rem, 3vh, 1.8rem) !important;
+    }
+    
+    /* Hero section - landscape optimized */
     .hero {
         min-height: 100vh;
-        padding-top: 80px;
+        padding-top: clamp(50px, 8vh, 70px);
+        padding-bottom: 0;
     }
     
     .hero-content {
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 1.5rem;
+        grid-template-columns: 1.3fr 0.7fr;
+        gap: clamp(1rem, 3vw, 2rem);
         align-items: center;
+        min-height: calc(100vh - clamp(50px, 8vh, 70px));
+        padding: clamp(1rem, 3vh, 2rem) clamp(10px, 2vw, 20px);
     }
     
     .hero-title {
-        font-size: clamp(1.8rem, 4vh, 2.5rem);
+        font-size: clamp(1.6rem, 5vh, 2.2rem);
+        line-height: 1.1;
+        margin-bottom: clamp(0.8rem, 2vh, 1.2rem);
     }
     
+    .hero-description {
+        font-size: clamp(0.9rem, 2.5vh, 1.1rem);
+        margin-bottom: clamp(1rem, 3vh, 1.5rem);
+    }
+    
+    .profile-img {
+        width: clamp(150px, 25vh, 200px);
+        height: clamp(150px, 25vh, 200px);
+    }
+    
+    /* Explore section - landscape grid */
     .explore-grid {
-        grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 45vw, 350px), 1fr));
-        gap: clamp(0.8rem, 1.5vw, 1.2rem);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 30vw, 280px), 1fr));
+        gap: clamp(0.5rem, 1.5vw, 1rem);
         padding: 0 clamp(5px, 1vw, 10px);
+        margin-top: clamp(1rem, 3vh, 2rem);
     }
     
     .explore-card {
-        padding: clamp(1rem, 2.5vw, 1.5rem);
-        min-height: clamp(160px, 35vh, 220px);
+        padding: clamp(0.8rem, 2vh, 1.2rem);
+        min-height: clamp(140px, 30vh, 180px);
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .explore-card h3 {
-        font-size: clamp(1.1rem, 2.8vw, 1.4rem);
-        margin-bottom: clamp(0.8rem, 2.5vw, 1.2rem);
+        font-size: clamp(1rem, 3vh, 1.3rem);
+        margin-bottom: clamp(0.6rem, 2vh, 1rem);
     }
     
+    .click-to-view {
+        padding: clamp(0.3rem, 1.5vh, 0.5rem) clamp(0.6rem, 2vw, 0.8rem);
+        font-size: clamp(0.75rem, 2vh, 0.9rem);
+        gap: clamp(0.3rem, 1vh, 0.5rem);
+    }
+    
+    .explore-icon i {
+        font-size: clamp(1.5rem, 4vh, 2rem);
+    }
+    
+    .click-to-view i {
+        font-size: clamp(0.7rem, 2vh, 0.9rem);
+    }
+    
+    /* About section landscape */
+    .about, .contact {
+        padding: clamp(1rem, 5vh, 2rem) 0 !important;
+        width: 100vw;
+    }
+    
+    .about-content {
+        gap: clamp(1rem, 3vw, 2rem);
+    }
+    
+    .about-card {
+        padding: clamp(0.8rem, 2.5vh, 1.2rem) !important;
+        margin-bottom: clamp(0.5rem, 2vh, 1rem) !important;
+    }
+    
+    .about-card h3 {
+        font-size: clamp(1rem, 3vh, 1.3rem) !important;
+        margin-bottom: clamp(0.5rem, 1.5vh, 0.8rem) !important;
+    }
+    
+    .about-card p {
+        font-size: clamp(0.8rem, 2vh, 1rem) !important;
+        line-height: 1.4;
+    }
+    
+    /* Page sections landscape */
     .page-section {
-        padding-top: 90px;
+        padding: clamp(1rem, 5vh, 2rem) 0 !important;
+        width: 100vw;
+        min-height: 100vh;
+    }
+    
+    .page-title {
+        font-size: clamp(1.8rem, 5vh, 2.5rem) !important;
+        margin-bottom: clamp(1rem, 3vh, 1.5rem);
+    }
+    
+    .section-subtitle {
+        font-size: clamp(0.9rem, 2.5vh, 1.1rem) !important;
+        margin-bottom: clamp(1rem, 3vh, 2rem);
     }
 }
 
@@ -2039,6 +2135,31 @@ section {
     .filter-btn {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
+    }
+}
+
+/* Additional landscape modes for different screen sizes */
+@media (max-width: 768px) and (orientation: landscape) and (min-height: 500px) {
+    /* Larger landscape screens (tablets in landscape) */
+    .hero-content {
+        grid-template-columns: 1.4fr 0.6fr;
+        gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+    
+    .explore-grid {
+        grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 35vw, 320px), 1fr));
+        gap: clamp(1rem, 2vw, 1.5rem);
+    }
+}
+
+/* Very wide landscape phones */
+@media (max-width: 968px) and (orientation: landscape) and (min-height: 500px) and (max-height: 600px) {
+    .hero {
+        padding-top: clamp(60px, 10vh, 80px);
+    }
+    
+    .explore-grid {
+        grid-template-columns: repeat(auto-fit, minmax(clamp(220px, 32vw, 300px), 1fr));
     }
 }
 
