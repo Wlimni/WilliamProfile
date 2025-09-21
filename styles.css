@@ -133,6 +133,23 @@ html {
     box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
 }
 
+/* Desktop navigation - larger "William Ni Profile" (769px and up) */
+@media (min-width: 769px) {
+    .nav-logo {
+        flex: initial;
+        min-width: initial;
+    }
+    
+    .nav-logo a {
+        font-size: 2rem !important;
+        font-weight: 900;
+        white-space: nowrap;
+        overflow: visible;
+        display: block;
+        max-width: none;
+    }
+}
+
     .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -2034,8 +2051,8 @@ section {
     }
 }
 
-/* Landscape orientation - Full screen optimization */
-@media (max-width: 968px) and (orientation: landscape) and (max-height: 500px) {
+/* Mobile landscape orientation - Full screen optimization (phones only) */
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
     /* Full screen landscape mode - no wasted space */
     html, body {
         width: 100vw;
@@ -2060,24 +2077,33 @@ section {
         justify-content: space-between;
     }
     
-    .nav-logo a {
-        font-size: clamp(0.85rem, 2.2vh, 1.2rem) !important;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: clamp(150px, 35vw, 200px);
+    /* Mobile-only logo optimization */
+    .nav-logo {
+        flex: 1;
+        min-width: 0;
     }
     
-    /* Compact navigation menu */
+    .nav-logo a {
+        font-size: clamp(0.8rem, 2vh, 1.1rem) !important;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: visible;
+        display: block;
+    }
+    
+    /* Ultra-compact navigation menu for phones - even smaller ovals and spacing */
     .nav-menu {
-        gap: clamp(0.6rem, 1.8vw, 1.2rem);
+        gap: clamp(0.05rem, 0.2vw, 0.2rem);
+        padding: clamp(1px, 0.3vh, 2px);
+        flex-shrink: 0;
     }
     
     .nav-menu a {
-        font-size: clamp(0.7rem, 1.8vh, 0.9rem);
-        padding: clamp(0.25rem, 0.8vh, 0.4rem) clamp(0.4rem, 1.2vw, 0.7rem);
+        font-size: clamp(0.45rem, 0.8vh, 0.55rem);
+        padding: clamp(0.06rem, 0.25vh, 0.12rem) clamp(0.15rem, 0.3vw, 0.25rem);
         white-space: nowrap;
+        min-width: clamp(30px, 7vw, 40px);
+        border-radius: clamp(10px, 2.5vw, 18px);
     }
     
     /* Ultra-compact mobile menu button */
@@ -2241,22 +2267,32 @@ section {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
     }
-}
+
 
 /* Additional landscape modes for different screen sizes */
 @media (max-width: 768px) and (orientation: landscape) and (min-height: 500px) {
-    /* Larger landscape screens (tablets in landscape) */
+    /* Tablet landscape screens - moderate compression */
     .navbar {
-        height: clamp(50px, 7vh, 65px);
+        height: clamp(55px, 8vh, 70px);
     }
     
     .nav-container {
-        height: clamp(50px, 7vh, 65px);
+        height: clamp(55px, 8vh, 70px);
     }
     
     .nav-logo a {
-        font-size: clamp(1rem, 2.8vh, 1.5rem) !important;
-        max-width: clamp(180px, 40vw, 250px);
+        font-size: clamp(1rem, 3vh, 1.4rem) !important;
+        max-width: clamp(220px, 55vw, 350px);
+    }
+    
+    .nav-menu {
+        gap: clamp(0.2rem, 0.8vw, 0.5rem);
+    }
+    
+    .nav-menu a {
+        padding: clamp(0.2rem, 0.6vh, 0.3rem) clamp(0.35rem, 0.8vw, 0.5rem);
+        font-size: clamp(0.65rem, 1.4vh, 0.75rem);
+        min-width: clamp(50px, 12vw, 70px);
     }
     
     .hero-content {
@@ -2270,14 +2306,26 @@ section {
     }
 }
 
-/* Very wide landscape phones */
-@media (max-width: 968px) and (orientation: landscape) and (min-height: 500px) and (max-height: 600px) {
+/* Very wide landscape phones (small devices only) */
+@media (max-width: 768px) and (orientation: landscape) and (min-height: 500px) and (max-height: 600px) {
     .hero {
         padding-top: clamp(60px, 10vh, 80px);
     }
     
     .explore-grid {
         grid-template-columns: repeat(auto-fit, minmax(clamp(220px, 32vw, 300px), 1fr));
+    }
+    
+    /* Extra compact navigation for wide landscape phones */
+    .nav-menu {
+        gap: clamp(0.08rem, 0.3vw, 0.25rem);
+        padding: clamp(1px, 0.4vh, 3px);
+    }
+    
+    .nav-menu a {
+        padding: clamp(0.08rem, 0.3vh, 0.15rem) clamp(0.18rem, 0.4vw, 0.3rem);
+        font-size: clamp(0.48rem, 0.9vh, 0.6rem);
+        min-width: clamp(32px, 8vw, 45px);
     }
 }
 
