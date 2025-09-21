@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - William Ni Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-container {
+            padding: 20px;
+            text-align: center;
+            background: #f0f9ff;
+            margin: 20px 0;
+        }
+        .test-result {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .pass { color: #059669; }
+        .fail { color: #dc2626; }
+        .viewport-info {
+            background: #e0f2fe;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Mobile Optimization Test</h1>
+        <div class="viewport-info">
+            <div><strong>Viewport Info:</strong></div>
+            <div id="viewport-width">Width: <span id="width-value">-</span>px</div>
+            <div id="viewport-height">Height: <span id="height-value">-</span>px</div>
+            <div id="orientation">Orientation: <span id="orientation-value">-</span></div>
+            <div id="device-ratio">Device Pixel Ratio: <span id="ratio-value">-</span></div>
+        </div>
+        
+        <div class="test-result">
+            <div id="overflow-test">Horizontal Overflow Test: <span id="overflow-result">Testing...</span></div>
+            <div id="navbar-test">Navbar Height: <span id="navbar-result">-</span>px</div>
+            <div id="rotation-test">Rotation Prompt: <span id="rotation-result">-</span></div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="index.html" style="background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px;">
+                Back to Main Site
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function updateViewportInfo() {
+            document.getElementById('width-value').textContent = window.innerWidth;
+            document.getElementById('height-value').textContent = window.innerHeight;
+            document.getElementById('orientation-value').textContent = 
+                window.innerWidth > window.innerHeight ? 'Landscape' : 'Portrait';
+            document.getElementById('ratio-value').textContent = window.devicePixelRatio || 1;
+            
+            // Test for horizontal overflow
+            const bodyWidth = document.body.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            const hasOverflow = bodyWidth > viewportWidth;
+            
+            document.getElementById('overflow-result').textContent = hasOverflow ? 'FAIL - Overflow detected' : 'PASS - No overflow';
+            document.getElementById('overflow-result').className = hasOverflow ? 'fail' : 'pass';
+            
+            // Test navbar height
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                const navbarHeight = navbar.offsetHeight;
+                document.getElementById('navbar-result').textContent = navbarHeight;
+            }
+            
+            // Test rotation prompt visibility
+            const rotationPrompt = document.querySelector('.rotation-prompt');
+            const isPortrait = window.innerHeight > window.innerWidth;
+            const isMobile = window.innerWidth <= 768;
+            const shouldShowPrompt = isPortrait && isMobile;
+            
+            if (rotationPrompt) {
+                const isVisible = window.getComputedStyle(rotationPrompt).display !== 'none';
+                const correctVisibility = shouldShowPrompt === isVisible;
+                document.getElementById('rotation-result').textContent = 
+                    correctVisibility ? 'PASS - Correct visibility' : 'FAIL - Wrong visibility';
+                document.getElementById('rotation-result').className = correctVisibility ? 'pass' : 'fail';
+            }
+        }
+        
+        // Update on load and resize
+        window.addEventListener('load', updateViewportInfo);
+        window.addEventListener('resize', updateViewportInfo);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateViewportInfo, 500); // Delay for orientation change
+        });
+    </script>
+</body>
+</html>
